@@ -9,7 +9,7 @@
   let monster = { specialties: {} };
 
   const loadData = async () => {
-    supabase.auth.user();
+    await supabase.auth.getUser();
     const { data, error, status } = await supabase.from("monsters").select(`*`).single().eq("id", id);
 
     if (data) {
@@ -180,7 +180,7 @@
   };
 
   const saveMonster = async () => {
-    supabase.auth.user();
+    await supabase.auth.getUser();
     const { error } = await supabase.from("monsters").upsert(monster);
 
     if (!error) {
@@ -193,7 +193,9 @@
 
   const deleteMonster = async () => {
     if (confirm("Are you sure?")) {
-      const user = supabase.auth.user();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { error } = await supabase.from("monsters").delete().eq("id", monster.id);
 
       if (!error) {

@@ -2,12 +2,36 @@
   import { supabase } from "../supabaseClient";
 
   let loading = false;
+  let email;
 
   const handleLogin = async () => {
     try {
       loading = true;
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo:
+            import.meta.env.MODE == "production" ? "https://mr-creature-gen.pages.dev" : "http://localhost:5173",
+        },
+      });
+      if (error) throw error;
+      alert("Check your email for the login link!");
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } finally {
+      loading = false;
+    }
+  };
+
+  const handleLoginDiscord = async () => {
+    try {
+      loading = true;
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: "discord",
+        options: {
+          redirectTo:
+            import.meta.env.MODE == "production" ? "https://mr-creature-gen.pages.dev" : "http://localhost:5173",
+        },
       });
       if (error) throw error;
     } catch (error) {
@@ -18,9 +42,21 @@
   };
 </script>
 
+<form class="row flex-center flex mb-8" on:submit|preventDefault={handleLogin}>
+  <div class="col-6 form-widget">
+    <p class="description">Sign in via magic link with your email below, or choose to sign in with Discord.</p>
+    <div>
+      <input class="inputField" type="email" placeholder="Your email" bind:value={email} />
+    </div>
+    <button class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <input type="submit" class="button block" value={loading ? "Loading" : "Send magic link"} disabled={loading} />
+    </button>
+  </div>
+</form>
+
 <div class="row flex">
   <button
-    on:click={handleLogin}
+    on:click={handleLoginDiscord}
     type="button"
     data-mdb-ripple="true"
     data-mdb-ripple-color="light"

@@ -5,7 +5,7 @@ import { get } from 'svelte/store';
 import { emptySkillPool } from "./data/skillList";
 export const generateMonster = async ({ manName, size, type, race, theme, magic, difficulty, apiKey }) => {
 
-  const user = supabase.auth.user()
+  const { data: { user } } = await supabase.auth.getUser();
 
   const openAIKey = get(apiKey)
 
@@ -35,7 +35,7 @@ export const generateMonster = async ({ manName, size, type, race, theme, magic,
   })
 
 
-  let { data, error } = await supabase.from('monsters').insert(monster)
+  let { data, error } = await supabase.from('monsters').insert(monster).select()
 
   if (error) throw error
   window.location.href = `/monsters/${data[0].id}`

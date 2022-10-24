@@ -19,16 +19,17 @@
   let theme = "";
   let magic = false;
 
-  function getProfile(node) {
+  async function getProfile(node) {
     try {
       loading = true;
-      const user = supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       supabase
         .from("monsters")
         .select(`id, inserted_at, name, size`)
         .order("inserted_at", { ascending: false })
-        .eq("user_id", user?.id)
         .then(({ data, error, status }) => {
           if (data) {
             monsters.set(data);
