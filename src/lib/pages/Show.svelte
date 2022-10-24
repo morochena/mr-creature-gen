@@ -4,8 +4,6 @@
 
   export let id;
 
-  console.log(id);
-
   let selectedSpecialty = "Academia";
 
   let monster = { specialties: {} };

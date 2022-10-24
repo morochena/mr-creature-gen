@@ -9,7 +9,7 @@ export const generateMonster = async ({ manName, size, type, race, theme, magic,
   const openAIKey = get(apiKey)
 
   // generate name and description
-  const { name, description } = await GPTGenerate(size, type, theme, difficulty, magic, openAIKey)
+  const { name, description } = await GPTGenerate(manName, size, type, theme, difficulty, magic, openAIKey)
 
   let monster = {
     name,

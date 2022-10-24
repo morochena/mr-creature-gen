@@ -44,9 +44,12 @@
 
   async function generateMonsterWrapper() {
     try {
-      generateMonster({ manName, size, type, race, theme, magic, difficulty, apiKey: openAIAPIKey });
+      loading = true;
+      await generateMonster({ manName, size, type, race, theme, magic, difficulty, apiKey: openAIAPIKey });
     } catch (error) {
       errorMessage = error.message;
+    } finally {
+      loading = false;
     }
   }
 
@@ -170,7 +173,12 @@
     >
   </div>
 
-  <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" value="Generate" />
+  <input
+    type="submit"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    value="Generate"
+    disabled={loading}
+  />
 
   <p class="text-red-500">{errorMessage}</p>
 </form>
