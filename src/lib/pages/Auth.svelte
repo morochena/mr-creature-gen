@@ -2,14 +2,14 @@
   import { supabase } from "../supabaseClient";
 
   let loading = false;
-  let email;
 
   const handleLogin = async () => {
     try {
       loading = true;
-      const { error } = await supabase.auth.signIn({ email });
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "discord",
+      });
       if (error) throw error;
-      alert("Check your email for the login link!");
     } catch (error) {
       alert(error.error_description || error.message);
     } finally {
@@ -18,14 +18,6 @@
   };
 </script>
 
-<form class="row flex-center flex" on:submit|preventDefault={handleLogin}>
-  <div class="col-6 form-widget">
-    <p class="description">Sign in via magic link with your email below</p>
-    <div>
-      <input class="inputField" type="email" placeholder="Your email" bind:value={email} />
-    </div>
-    <button>
-      <input type="submit" class="button block" value={loading ? "Loading" : "Send magic link"} disabled={loading} />
-    </button>
-  </div>
-</form>
+<div class="row flex">
+  <button on:click={handleLogin} class="button block"> Sign in with Discord </button>
+</div>

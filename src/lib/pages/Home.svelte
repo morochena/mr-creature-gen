@@ -22,7 +22,7 @@
   function getProfile(node) {
     try {
       loading = true;
-      const user = supabase.auth.user();
+      const user = supabase.auth.getUser();
 
       supabase
         .from("monsters")
@@ -67,6 +67,16 @@
 
   getProfile();
 </script>
+
+<div class="mt-8">
+  <button
+    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+    on:click={signOut}
+    disabled={loading}
+  >
+    Sign Out
+  </button>
+</div>
 
 <h1 class="text-2xl font-bold mb-4">Generate New Monster</h1>
 
@@ -208,13 +218,3 @@
     </tbody>
   </Datatable>
 {/if}
-
-<div class="mt-8">
-  <button
-    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-    on:click={signOut}
-    disabled={loading}
-  >
-    Sign Out
-  </button>
-</div>

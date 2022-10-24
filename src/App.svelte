@@ -8,15 +8,22 @@
   import Auth from "./lib/pages/Auth.svelte";
   import logo from "./assets/logo.png";
 
-  // @ts-ignore
-  user.set(supabase.auth.user());
+  const setSession = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) {
+      user.set(session.user);
+    }
+  };
 
   supabase.auth.onAuthStateChange((_, session) => {
-    // @ts-ignore
     user.set(session.user);
   });
 
   let url = "";
+
+  setSession();
 </script>
 
 <main class="container mx-auto grid mt-4 mb-20 px-10">
