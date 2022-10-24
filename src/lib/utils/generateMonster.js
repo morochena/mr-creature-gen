@@ -2,6 +2,7 @@ import { monsters } from "../stores/monsterStore";
 import { supabase } from "../supabaseClient";
 import { GPTGenerate } from "./GPT3.js";
 import { get } from 'svelte/store';
+import { emptySkillPool } from "./data/skillList";
 export const generateMonster = async ({ manName, size, type, race, theme, magic, difficulty, apiKey }) => {
 
   const user = supabase.auth.user()
@@ -77,29 +78,6 @@ const addSkillPoint = (skill, monster) => {
 const roll2d10 = () => {
   return Math.max(Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1);
 }
-
-const emptySkillPool = () => [
-  { name: "smash", stat: "str", value: 0 },
-  { name: "launch", stat: "str", value: 0 },
-  { name: "athletics", stat: "str", value: 0 },
-  { name: "physique", stat: "str", value: 0 },
-  { name: "provoke", stat: "str", value: 0 },
-  { name: "accuracy", stat: "dex", value: 0 },
-  { name: "mobility", stat: "dex", value: 0 },
-  { name: "thievery", stat: "dex", value: 0 },
-  { name: "notice", stat: "dex", value: 0 },
-  { name: "stealth", stat: "dex", value: 0 },
-  { name: "animal_handling", stat: "emp", value: 0 },
-  { name: "deceive", stat: "emp", value: 0 },
-  { name: "rapport", stat: "emp", value: 0 },
-  { name: "willpower", stat: "emp", value: 0 },
-  { name: "mysticism", stat: "emp", value: 0 },
-  { name: "craft", stat: "int", value: 0 },
-  { name: "travel", stat: "int", value: 0 },
-  { name: "reasoning", stat: "int", value: 0 },
-  { name: "lore", stat: "int", value: 0 },
-  { name: "resourcefulness", stat: "int", value: 0 },
-]
 
 function generateBaseStats(size, difficulty, magic, monster) {
   let str = roll2d10();
