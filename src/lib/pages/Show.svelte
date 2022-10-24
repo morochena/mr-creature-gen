@@ -30,6 +30,57 @@
     console;
   };
 
+  const calcLevel = (monster) => {
+    let level = 0;
+
+    const scaleAdd = (stat) => {
+      let xp = 0;
+      for (let i = 0; i <= stat; i++) {
+        xp += i;
+      }
+
+      return xp;
+    };
+
+    level += scaleAdd(monster.str - 8);
+    level += scaleAdd(monster.dex - 8);
+    level += scaleAdd(monster.emp - 8);
+    level += scaleAdd(monster.int - 8);
+
+    const skills = [
+      { name: "smash", stat: "str", value: 0 },
+      { name: "launch", stat: "str", value: 0 },
+      { name: "athletics", stat: "str", value: 0 },
+      { name: "physique", stat: "str", value: 0 },
+      { name: "provoke", stat: "str", value: 0 },
+      { name: "accuracy", stat: "dex", value: 0 },
+      { name: "mobility", stat: "dex", value: 0 },
+      { name: "thievery", stat: "dex", value: 0 },
+      { name: "notice", stat: "dex", value: 0 },
+      { name: "stealth", stat: "dex", value: 0 },
+      { name: "animal_handling", stat: "emp", value: 0 },
+      { name: "deceive", stat: "emp", value: 0 },
+      { name: "rapport", stat: "emp", value: 0 },
+      { name: "willpower", stat: "emp", value: 0 },
+      { name: "mysticism", stat: "emp", value: 0 },
+      { name: "craft", stat: "int", value: 0 },
+      { name: "travel", stat: "int", value: 0 },
+      { name: "reasoning", stat: "int", value: 0 },
+      { name: "lore", stat: "int", value: 0 },
+      { name: "resourcefulness", stat: "int", value: 0 },
+    ];
+
+    for (const skill of skills) {
+      level += scaleAdd(monster[skill.name]);
+    }
+
+    for (const specialty in monster.specialties) {
+      level += scaleAdd(monster.specialties[specialty]);
+    }
+
+    return level;
+  };
+
   const calcStatBonus = (stat) => {
     const value = Math.floor(stat - 5);
     if (value > 0) {
@@ -198,7 +249,7 @@
   <div class="w-32 bg-gray-400 p-2 mx-1">Perception {calcPerception(monster)}</div>
   <div class="w-32 bg-gray-400 p-2 mx-1">Move {calcMove(monster)}</div>
   <div class="w-32 bg-gray-400 p-2 mx-1">Run {calcRun(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Armor</div>
+  <div class="w-32 bg-gray-400 p-2 mx-1">~XP {calcLevel(monster)}</div>
 </div>
 
 <div class="flex flex-wrap -mx-3">
