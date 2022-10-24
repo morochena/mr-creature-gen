@@ -151,6 +151,17 @@
     }
   };
 
+  const removeSpecialty = (selectedSpecialty) => {
+    const newSpecialties = Object.keys(monster.specialties).reduce((acc, key) => {
+      if (key !== selectedSpecialty) {
+        acc[key] = monster.specialties[key];
+      }
+      return acc;
+    }, {});
+
+    monster.specialties = newSpecialties;
+  };
+
   loadData();
 </script>
 
@@ -192,6 +203,8 @@
 
 <div class="flex flex-wrap -mx-3">
   <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">Base Stats</h2>
+
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="mb-4 flex items-center">
         <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="str"> Strength </label>
@@ -252,9 +265,9 @@
       </div>
     </div>
 
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <!-- list each monster.speciality -->
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">Specialties</h2>
 
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       {#each Object.keys(monster.specialties || {}) as speciality}
         <div class="mb-4 flex items-center">
           <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-32" for="smash"> {speciality} </label>
@@ -264,6 +277,7 @@
             type="number"
             bind:value={monster.specialties[speciality]}
           />
+          <button on:click={() => removeSpecialty(speciality)} class="text-red-500 text-xs ml-8">X</button>
         </div>
       {/each}
 
@@ -278,11 +292,15 @@
           {/each}
           <option value="arr">Arrows</option>
         </select>
-        <button>Add</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" type="submit">
+          Add
+        </button>
       </form>
     </div>
   </div>
   <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">STR Skills</h2>
+
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="mb-4 flex items-center">
         <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="smash"> Smash </label>
@@ -343,6 +361,8 @@
         >
       </div>
     </div>
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">EMP Skills</h2>
+
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="mb-4 flex items-center">
         <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="animal_handling">
@@ -409,6 +429,8 @@
     </div>
   </div>
   <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">DEX Skills</h2>
+
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="mb-4 flex items-center">
         <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="accuracy"> Accuracy </label>
@@ -470,6 +492,8 @@
         >
       </div>
     </div>
+    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">INT Skills</h2>
+
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
       <div class="mb-4 flex items-center">
         <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="craft"> Craft </label>
