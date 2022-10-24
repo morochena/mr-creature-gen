@@ -88,10 +88,11 @@
       name="manName"
       id="manName"
       type="text"
-      placeholder="Name (optional)"
+      placeholder="Name"
       bind:value={manName}
-      class="block bg-gray-200 rounded p-2 mb-4"
+      class="block bg-gray-200 rounded p-2"
     />
+    <span class="text-xs mb-4">This value required if not providing an OpenAI AI Key below.</span>
   </div>
 
   <div class="mb-4">
