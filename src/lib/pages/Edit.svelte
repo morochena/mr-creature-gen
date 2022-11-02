@@ -101,7 +101,15 @@
 </button>
 <button on:click={deleteMonster} class="btn-danger"> Delete </button>
 
-<div class="form-group margin-top-large">
+<!-- checkbox for is_public -->
+<fieldset class="form-group margin-top-large">
+  <label for="paperChecks1" class="paper-check">
+    <input type="checkbox" name="paperChecks" id="paperChecks1" bind:value={monster.is_public} />
+    <span>Public link (read-only)</span>
+  </label>
+</fieldset>
+
+<div class="form-group ">
   <label for="name">Name</label>
   <input name="name" id="name" class="input-block" bind:value={monster.name} />
 </div>

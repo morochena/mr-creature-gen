@@ -21,7 +21,7 @@
   let theme = "";
   let magic = false;
 
-  async function getProfile(node) {
+  async function getMonsters(node) {
     try {
       loading = true;
       const {
@@ -31,6 +31,7 @@
       supabase
         .from("monsters")
         .select(`id, inserted_at, name, size`)
+        .eq("user_id", user.id)
         .order("inserted_at", { ascending: false })
         .then(({ data, error, status }) => {
           if (data) {
@@ -76,7 +77,7 @@
     currentTab = "list";
   };
 
-  getProfile();
+  getMonsters();
 </script>
 
 <a href="/">
