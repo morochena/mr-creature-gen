@@ -401,21 +401,22 @@
 
 <h3>Specialties</h3>
 
-<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-  {#each Object.keys(monster.specialties || {}) as speciality}
-    <div class="mb-4 flex items-center">
-      <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-32" for="smash"> {speciality} </label>
-      <input
-        class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id={speciality}
-        type="number"
-        bind:value={monster.specialties[speciality]}
-      />
-      <button on:click={() => removeSpecialty(speciality)} class="text-red-500 text-xs ml-8">X</button>
-    </div>
-  {/each}
+<table>
+  <tbody>
+    {#each Object.keys(monster.specialties || {}) as speciality}
+      <tr>
+        <td><label class="" for={speciality}> {speciality} </label></td>
+        <td><input class="" id={speciality} type="number" bind:value={monster.specialties[speciality]} /></td>
+        <td>+?</td>
+        <td> <button on:click={() => removeSpecialty(speciality)} class="btn-danger">X</button> </td>
+      </tr>
+    {/each}
+  </tbody>
+</table>
 
-  <form class="" method="POST" on:submit|preventDefault={addSpeciality}>
+<form class="" method="POST" on:submit|preventDefault={addSpeciality}>
+  <div class="margin-top-large form-group">
+    <label for="speciality">Add Speciality</label>
     <select
       name="speciality"
       class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -426,6 +427,6 @@
       {/each}
       <option value="arr">Arrows</option>
     </select>
-    <button class="btn-secondary btn-block margin-top-small" type="submit"> Add </button>
-  </form>
-</div>
+  </div>
+  <button class="btn-secondary btn-block margin-top-small" type="submit"> Add </button>
+</form>
