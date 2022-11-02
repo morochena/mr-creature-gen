@@ -4,6 +4,7 @@
   import { Datatable } from "svelte-simple-datatables";
   import { monsters } from "../stores/monsterStore";
   import { openAIAPIKey } from "../stores/apiKeyStore";
+  import logo from "../../assets/logo.png";
 
   let loading = true;
   const settings = { columnFilter: true };
@@ -77,6 +78,17 @@
 
   getProfile();
 </script>
+
+<a href="/">
+  <img
+    src={logo}
+    alt="Logo"
+    width="300px"
+    style="display: block;
+  margin-left: auto;
+  margin-right: auto;"
+  />
+</a>
 
 <div class="row flex-spaces tabs margin-top-large">
   <input id="tab1" type="radio" name="tabs" checked />
