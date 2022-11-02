@@ -7,6 +7,7 @@
   import Show from "./lib/pages/Show.svelte";
   import Auth from "./lib/pages/Auth.svelte";
   import logo from "./assets/logo.png";
+  import "papercss/dist/paper.min.css";
 
   const setSession = async () => {
     const {
@@ -27,7 +28,7 @@
   setSession();
 </script>
 
-<main class="container mx-auto grid mt-4 mb-20 px-10">
+<main class="">
   <a href="/" class="place-self-center">
     <img src={logo} alt="Logo" class="object-cover h-48 w-96 place-self-center" />
   </a>
