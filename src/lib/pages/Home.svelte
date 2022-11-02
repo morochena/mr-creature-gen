@@ -177,18 +177,18 @@
 {/if}
 
 {#if !loading && currentTab == "list"}
-  <Datatable {settings} data={$monsters} bind:dataRows={rows}>
+  <table>
     <thead>
       <th data-key="name">Name</th>
     </thead>
     <tbody>
-      {#if rows}
-        {#each $rows as row}
+      {#if monsters}
+        {#each $monsters as row}
           <tr>
             <td><a href={`/monsters/${row.id}`}>{row.name}</a></td>
           </tr>
         {/each}
       {/if}
     </tbody>
-  </Datatable>
+  </table>
 {/if}
