@@ -2,6 +2,8 @@
   import { specialtyList } from "../utils/data/specialtyList";
   import { supabase } from "../supabaseClient";
 
+  import StatInput from "./StatInput.svelte";
+
   export let id;
 
   let selectedSpecialty = "Academia";
@@ -218,96 +220,48 @@
   loadData();
 </script>
 
-<!-- create a save button-->
-<div class="flex justify-end">
-  <button
-    on:click={saveMonster}
-    class="bg-blue-500 hover:bg-blue-700 w-24 text-white font-bold py-2 px-4 rounded text-center my-4"
-  >
-    {saveText}
-  </button>
-  <button
-    on:click={deleteMonster}
-    class="bg-red-500 hover:bg-red-700 w-24 text-white font-bold py-2 px-4 rounded text-center my-4 ml-2"
-  >
-    Delete
-  </button>
+<button on:click={saveMonster} class="btn-block btn-secondary margin-top-small">
+  {saveText}
+</button>
+<button on:click={deleteMonster} class="btn-block btn-danger"> Delete </button>
+
+<div class="form-group">
+  <label for="name">Name</label>
+  <input name="name" id="name" class="input-block" bind:value={monster.name} />
 </div>
 
-<div class="flex items-center bg-gray-200 p-3">
-  <div class="w-36 h-36 bg-gray-400" />
-  <div class="ml-4 w-full">
-    <input class="text-lg leading-6 font-medium text-gray-900 w-full" bind:value={monster.name} />
-    <br />
-    <textarea rows="6" class="mt-2 text-sm leading-5 text-gray-500 w-full" bind:value={monster.description} />
-  </div>
-</div>
-<!-- calculated stats: body, mind, dodge, consider, move run, armor -->
-<div class="flex items-center bg-gray-200 p-3">
-  <div class="w-32 bg-gray-400 p-2 mx-1">Body: {calcBody(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Mind {calcMind(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Dodge {calcDodge(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Consider {calcConsider(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Perception {calcPerception(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Move {calcMove(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">Run {calcRun(monster)}</div>
-  <div class="w-32 bg-gray-400 p-2 mx-1">~XP {calcLevel(monster)}</div>
+<div class="form-group">
+  <label for="description">Description</label>
+  <textarea name="description" id="description" rows="6" class="input-block" bind:value={monster.description} />
 </div>
 
-<div class="flex flex-wrap -mx-3">
-  <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">Base Stats</h2>
+<h3>Calculated Stats</h3>
 
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="str"> Strength </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="str"
-          type="number"
-          bind:value={monster.str}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcStatBonus(monster.str)}</span>
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="dex"> Dexterity </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="dex"
-          type="number"
-          bind:value={monster.dex}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcStatBonus(monster.dex)}</span>
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="emp"> Empathy </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="emp"
-          type="number"
-          bind:value={monster.emp}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcStatBonus(monster.emp)}</span>
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="int"> Intelligence </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="int"
-          type="number"
-          bind:value={monster.int}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcStatBonus(monster.int)}</span>
-      </div>
+<table>
+  <tbody>
+    <tr><td>Body</td><td>{calcBody(monster)}</td></tr>
+    <tr><td>Mind</td><td> {calcMind(monster)}</td></tr>
+    <tr><td>Dodge</td><td> {calcDodge(monster)}</td></tr>
+    <tr><td>Consider</td><td> {calcConsider(monster)}</td></tr>
+    <tr><td>Perception</td><td> {calcPerception(monster)}</td></tr>
+    <tr><td>Move</td><td> {calcMove(monster)}</td></tr>
+    <tr><td>Run</td><td> {calcRun(monster)}</td></tr>
+    <tr><td>~XP</td><td> {calcLevel(monster)}</td></tr>
+  </tbody>
+</table>
 
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="int"> Size </label>
-        <select
-          name="size"
-          id="size"
-          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          bind:value={monster.size}
-        >
+<h3>Base Stats</h3>
+
+<table>
+  <tbody>
+    <StatInput label="Strength" bind:statValue={monster.str} statBonus={calcStatBonus(monster.str)} />
+    <StatInput label="Dexterity" bind:statValue={monster.dex} statBonus={calcStatBonus(monster.dex)} />
+    <StatInput label="Empathy" bind:statValue={monster.emp} statBonus={calcStatBonus(monster.emp)} />
+    <StatInput label="Intelligence" bind:statValue={monster.int} statBonus={calcStatBonus(monster.int)} />
+    <tr>
+      <td><label for="size"> Size </label></td>
+      <td
+        ><select name="size" id="size" style="width: 120px" bind:value={monster.size}>
           <option value="tiny">Tiny</option>
           <option value="small">Small</option>
           <option value="medium">Medium</option>
@@ -315,294 +269,163 @@
           <option value="huge">Huge</option>
           <option value="gargantuan">Gargantuan</option>
         </select>
-      </div>
+      </td>
+      <td />
+    </tr>
+  </tbody>
+</table>
+
+<h4>STR Skills</h4>
+
+<table>
+  <tbody>
+    <StatInput
+      label="Smash"
+      bind:statValue={monster.smash}
+      statBonus={calcTotalSkillBonus(monster.str, monster.smash)}
+    />
+    <StatInput
+      label="Launch"
+      bind:statValue={monster.launch}
+      statBonus={calcTotalSkillBonus(monster.str, monster.launch)}
+    />
+    <StatInput
+      label="Athletics"
+      bind:statValue={monster.athletics}
+      statBonus={calcTotalSkillBonus(monster.str, monster.athletics)}
+    />
+    <StatInput
+      label="Physique"
+      bind:statValue={monster.physique}
+      statBonus={calcTotalSkillBonus(monster.str, monster.physique)}
+    />
+    <StatInput
+      label="Provoke"
+      bind:statValue={monster.provoke}
+      statBonus={calcTotalSkillBonus(monster.str, monster.provoke)}
+    />
+  </tbody>
+</table>
+
+<h4>DEX Skills</h4>
+
+<table>
+  <tbody>
+    <StatInput
+      label="Accuracy"
+      bind:statValue={monster.accuracy}
+      statBonus={calcTotalSkillBonus(monster.dex, monster.accuracy)}
+    />
+    <StatInput
+      label="Mobility"
+      bind:statValue={monster.mobility}
+      statBonus={calcTotalSkillBonus(monster.dex, monster.mobility)}
+    />
+    <StatInput
+      label="Thievery"
+      bind:statValue={monster.thievery}
+      statBonus={calcTotalSkillBonus(monster.dex, monster.thievery)}
+    />
+    <StatInput
+      label="Notice"
+      bind:statValue={monster.notice}
+      statBonus={calcTotalSkillBonus(monster.dex, monster.notice)}
+    />
+    <StatInput
+      label="Stealth"
+      bind:statValue={monster.stealth}
+      statBonus={calcTotalSkillBonus(monster.dex, monster.stealth)}
+    />
+  </tbody>
+</table>
+
+<h4>EMP Skills</h4>
+
+<table>
+  <tbody>
+    <StatInput
+      label="Animal Handling"
+      bind:statValue={monster.animal_handling}
+      statBonus={calcTotalSkillBonus(monster.emp, monster.animal_handling)}
+    />
+    <StatInput
+      label="Deceive"
+      bind:statValue={monster.deceive}
+      statBonus={calcTotalSkillBonus(monster.emp, monster.deceive)}
+    />
+    <StatInput
+      label="Rapport"
+      bind:statValue={monster.rapport}
+      statBonus={calcTotalSkillBonus(monster.emp, monster.rapport)}
+    />
+    <StatInput
+      label="Willpower"
+      bind:statValue={monster.willpower}
+      statBonus={calcTotalSkillBonus(monster.emp, monster.willpower)}
+    />
+    <StatInput
+      label="Mysticism"
+      bind:statValue={monster.mysticism}
+      statBonus={calcTotalSkillBonus(monster.emp, monster.mysticism)}
+    />
+  </tbody>
+</table>
+
+<h4>INT Skills</h4>
+
+<table>
+  <tbody>
+    <StatInput
+      label="Craft"
+      bind:statValue={monster.craft}
+      statBonus={calcTotalSkillBonus(monster.int, monster.craft)}
+    />
+    <StatInput
+      label="Travel"
+      bind:statValue={monster.travel}
+      statBonus={calcTotalSkillBonus(monster.int, monster.travel)}
+    />
+    <StatInput
+      label="Reasoning"
+      bind:statValue={monster.reasoning}
+      statBonus={calcTotalSkillBonus(monster.int, monster.reasoning)}
+    />
+    <StatInput label="Lore" bind:statValue={monster.lore} statBonus={calcTotalSkillBonus(monster.int, monster.lore)} />
+    <StatInput
+      label="Resourcefulness"
+      bind:statValue={monster.resourcefulness}
+      statBonus={calcTotalSkillBonus(monster.int, monster.resourcefulness)}
+    />
+  </tbody>
+</table>
+
+<h3>Specialties</h3>
+
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+  {#each Object.keys(monster.specialties || {}) as speciality}
+    <div class="mb-4 flex items-center">
+      <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-32" for="smash"> {speciality} </label>
+      <input
+        class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id={speciality}
+        type="number"
+        bind:value={monster.specialties[speciality]}
+      />
+      <button on:click={() => removeSpecialty(speciality)} class="text-red-500 text-xs ml-8">X</button>
     </div>
+  {/each}
 
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">Specialties</h2>
-
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      {#each Object.keys(monster.specialties || {}) as speciality}
-        <div class="mb-4 flex items-center">
-          <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-32" for="smash"> {speciality} </label>
-          <input
-            class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id={speciality}
-            type="number"
-            bind:value={monster.specialties[speciality]}
-          />
-          <button on:click={() => removeSpecialty(speciality)} class="text-red-500 text-xs ml-8">X</button>
-        </div>
+  <form class="" method="POST" on:submit|preventDefault={addSpeciality}>
+    <select
+      name="speciality"
+      class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      bind:value={selectedSpecialty}
+    >
+      {#each specialtyList as speciality}
+        <option value={speciality}>{speciality}</option>
       {/each}
-
-      <form class="" method="POST" on:submit|preventDefault={addSpeciality}>
-        <select
-          name="speciality"
-          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          bind:value={selectedSpecialty}
-        >
-          {#each specialtyList as speciality}
-            <option value={speciality}>{speciality}</option>
-          {/each}
-          <option value="arr">Arrows</option>
-        </select>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" type="submit">
-          Add
-        </button>
-      </form>
-    </div>
-  </div>
-  <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">STR Skills</h2>
-
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="smash"> Smash </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="smash"
-          type="number"
-          bind:value={monster.smash}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.str, monster.smash)}</span>
-      </div>
-
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="launch"> Launch </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="launch"
-          type="number"
-          bind:value={monster.launch}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.str, monster.launch)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="athletics"> Athletics </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="athletics"
-          type="number"
-          bind:value={monster.athletics}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.str, monster.athletics)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="physique"> Physique </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="physique"
-          type="number"
-          bind:value={monster.physique}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.str, monster.physique)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="provoke"> Provoke </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="provoke"
-          type="number"
-          bind:value={monster.provoke}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.str, monster.provoke)}</span
-        >
-      </div>
-    </div>
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">EMP Skills</h2>
-
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="animal_handling">
-          Animal Handling
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="animal_handling"
-          type="number"
-          bind:value={monster.animal_handling}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.emp, monster.animal_handling)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="deceive"> Deceive </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="deceive"
-          type="number"
-          bind:value={monster.deceive}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.emp, monster.deceive)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="rapport"> Rapport </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="rapport"
-          type="number"
-          bind:value={monster.rapport}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.emp, monster.rapport)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="willpower"> Willpower </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="willpower"
-          type="number"
-          bind:value={monster.willpower}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.emp, monster.willpower)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="mysticism"> Mysticism </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="mysticism"
-          type="number"
-          bind:value={monster.mysticism}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.emp, monster.mysticism)}</span
-        >
-      </div>
-    </div>
-  </div>
-  <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">DEX Skills</h2>
-
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="accuracy"> Accuracy </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="accuracy"
-          type="number"
-          bind:value={monster.accuracy}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.dex, monster.accuracy)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="mobility"> Mobility </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="mobility"
-          type="number"
-          bind:value={monster.mobility}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.dex, monster.mobility)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="thievery"> Thievery </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="thievery"
-          type="number"
-          bind:value={monster.thievery}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.dex, monster.thievery)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="notice"> Notice </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="notice"
-          type="number"
-          bind:value={monster.notice}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.dex, monster.notice)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="stealth"> Stealth </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="stealth"
-          type="number"
-          bind:value={monster.stealth}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.dex, monster.stealth)}</span
-        >
-      </div>
-    </div>
-    <h2 class="text-lg leading-6 font-medium text-gray-900 my-4 text-center">INT Skills</h2>
-
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="craft"> Craft </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="craft"
-          type="number"
-          bind:value={monster.craft}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.int, monster.craft)}</span>
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="travel"> Travel </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="travel"
-          type="number"
-          bind:value={monster.travel}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.int, monster.travel)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="reasoning"> Reasoning </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="reasoning"
-          type="number"
-          bind:value={monster.reasoning}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.int, monster.reasoning)}</span
-        >
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="lore"> Lore </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="lore"
-          type="number"
-          bind:value={monster.lore}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2">{calcTotalSkillBonus(monster.int, monster.lore)}</span>
-      </div>
-      <div class="mb-4 flex items-center">
-        <label class="block text-gray-700 text-sm font-bold mb-2 mx-2 w-24" for="resourcefulness"> Resourceful </label>
-        <input
-          class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="resourcefulness"
-          type="number"
-          bind:value={monster.resourcefulness}
-        />
-        <span class="text-gray-700 text-sm font-bold mb-2 mx-2"
-          >{calcTotalSkillBonus(monster.int, monster.resourcefulness)}</span
-        >
-      </div>
-    </div>
-  </div>
+      <option value="arr">Arrows</option>
+    </select>
+    <button class="btn-secondary btn-block margin-top-small" type="submit"> Add </button>
+  </form>
 </div>
