@@ -225,7 +225,7 @@
 </button>
 <button on:click={deleteMonster} class="btn-block btn-danger"> Delete </button>
 
-<div class="form-group">
+<div class="form-group margin-top-large">
   <label for="name">Name</label>
   <input name="name" id="name" class="input-block" bind:value={monster.name} />
 </div>
