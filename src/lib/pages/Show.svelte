@@ -406,7 +406,15 @@
     {#each Object.keys(monster.specialties || {}) as speciality}
       <tr>
         <td><label class="" for={speciality}> {speciality} </label></td>
-        <td><input class="" id={speciality} type="number" bind:value={monster.specialties[speciality]} /></td>
+        <td
+          ><input
+            class=""
+            id={speciality}
+            style="width: 80px"
+            type="number"
+            bind:value={monster.specialties[speciality]}
+          /></td
+        >
         <td>+?</td>
         <td> <button on:click={() => removeSpecialty(speciality)} class="btn-danger">X</button> </td>
       </tr>
@@ -417,11 +425,7 @@
 <form class="" method="POST" on:submit|preventDefault={addSpeciality}>
   <div class="margin-top-large form-group">
     <label for="speciality">Add Speciality</label>
-    <select
-      name="speciality"
-      class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-      bind:value={selectedSpecialty}
-    >
+    <select name="speciality" class="" bind:value={selectedSpecialty}>
       {#each specialtyList as speciality}
         <option value={speciality}>{speciality}</option>
       {/each}

@@ -18,6 +18,6 @@
 
 <tr>
   <td><label for={label}>{label}</label></td>
-  <td><input id={label} type="number" bind:value={statValue} style="width: 120px" /></td>
+  <td><input id={label} type="number" bind:value={statValue} style="width: 80px" /></td>
   <td>{statBonus}</td>
 </tr>
